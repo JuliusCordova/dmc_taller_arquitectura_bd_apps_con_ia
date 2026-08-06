@@ -18,29 +18,44 @@ Formar profesionales capaces de diseñar la arquitectura de datos y la base de d
 2. **La especificación es la fuente de verdad.**
    La DMC Application Specification concentra el contexto funcional y técnico del proyecto. Los prompts orquestan; el Spec conserva el conocimiento.
 
-3. **La IA transforma especificaciones en artefactos.**
+3. **Un buen prompt de desarrollo es una instrucción de ingeniería.**
+   Antes de modelar o programar, el alumno aprende a definir actor, tarea, límites, autovalidación y salida mediante el framework ATLAS.
+
+4. **La IA transforma especificaciones en artefactos.**
    Se utiliza para analizar requerimientos, modelar datos, generar código, proponer pruebas, documentar decisiones y detectar inconsistencias.
 
-4. **Toda salida de IA debe validarse.**
+5. **Toda salida de IA debe validarse.**
    Ningún modelo, script, arquitectura o recomendación se considera correcto sin revisión, pruebas y evidencias.
 
-5. **El aprendizaje es incremental.**
+6. **El aprendizaje es incremental.**
    Cada sesión extiende el mismo producto y actualiza su Spec. El alumno ve cómo una solución evoluciona desde la idea hasta producción.
 
-6. **La arquitectura debe ser explicable.**
+7. **La arquitectura debe ser explicable.**
    Cada decisión debe responder a una necesidad, riesgo, restricción o atributo de calidad.
 
-7. **El código es un artefacto, no el punto de partida.**
-   El flujo canónico es: caso de uso → Spec → diseño → código → pruebas → despliegue → evidencias.
+8. **El código es un artefacto, no el punto de partida.**
+   El flujo canónico es: caso de uso → Spec → prompt controlado → diseño → código → pruebas → despliegue → evidencias.
 
-8. **La práctica debe parecerse al trabajo real.**
+9. **La práctica debe parecerse al trabajo real.**
    Se incorporan requisitos funcionales y no funcionales, historias de usuario, trade-offs, control de versiones, datos sintéticos, validación y presentación ejecutiva.
 
-9. **La seguridad y el gobierno se diseñan desde el inicio.**
-   No se agregan al final. Se consideran identidad, secretos, permisos, auditoría, protección de datos y observabilidad durante todo el ciclo.
+10. **La seguridad y el gobierno se diseñan desde el inicio.**
+    No se agregan al final. Se consideran identidad, secretos, permisos, auditoría, protección de datos y observabilidad durante todo el ciclo.
 
-10. **El alumno debe producir evidencia.**
-    Cada sesión termina con un entregable verificable: una actualización del Spec, un modelo, código, pruebas, métricas, diagramas o una demostración.
+11. **El alumno debe producir evidencia.**
+    Cada sesión termina con un entregable verificable: una actualización del Spec, un prompt versionado, un modelo, código, pruebas, métricas, diagramas o una demostración.
+
+## Framework ATLAS para el trabajo con IA
+
+ATLAS es el estándar pedagógico del programa para construir prompts de desarrollo:
+
+- **A — Actor:** define el rol profesional desde el que trabajará la IA.
+- **T — Tarea:** establece el trabajo concreto y verificable.
+- **L — Límites:** controla fuentes, alcance, prohibiciones y decisiones pendientes.
+- **A — Autovalidación:** obliga a revisar trazabilidad, consistencia e invenciones.
+- **S — Salida:** define artefactos, formato, ruta, herramientas y criterio de finalización.
+
+El framework progresa desde prompts básicos hasta instrucciones ejecutables sobre GitHub, Figma, modelos de datos, código y pruebas.
 
 ## Flujo metodológico oficial
 
@@ -48,6 +63,8 @@ Formar profesionales capaces de diseñar la arquitectura de datos y la base de d
 Caso de uso
     ↓
 DMC Application Specification
+    ↓
+Prompt ATLAS controlado
     ↓
 Diseño conceptual
     ↓
@@ -69,6 +86,7 @@ Evidencias y aprendizaje
 La IA actuará como copiloto para:
 
 - descubrir ambigüedades en requisitos;
+- formular preguntas abiertas;
 - proponer entidades, relaciones y reglas;
 - comparar alternativas de arquitectura;
 - generar modelos y diagramas;
@@ -94,6 +112,7 @@ Las 19 sesiones construyen progresivamente una aplicación moderna. El proyecto 
 - caso de negocio y actores;
 - requerimientos funcionales y no funcionales;
 - historias de usuario y criterios de aceptación;
+- prompts ATLAS versionados y evidencias de mejora;
 - modelo conceptual, lógico y físico;
 - base de datos relacional y/o documental según el caso;
 - backend y contratos de API;
@@ -124,6 +143,7 @@ Una sesión se considera completa cuando:
 - existe una conexión explícita entre negocio y tecnología;
 - el alumno produce al menos un artefacto verificable;
 - la IA se utiliza con instrucciones y contexto controlados;
+- el prompt contiene límites y autovalidación cuando corresponda;
 - hay validación humana y técnica;
 - el Spec queda actualizado;
 - se documentan decisiones y pendientes;
@@ -131,4 +151,4 @@ Una sesión se considera completa cuando:
 
 ## Mensaje central
 
-> La IA acelera la construcción. La especificación conserva el conocimiento. El arquitecto mantiene el criterio.
+> La IA acelera la construcción. La especificación conserva el conocimiento. ATLAS controla la instrucción. El arquitecto mantiene el criterio.
