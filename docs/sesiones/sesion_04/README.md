@@ -84,6 +84,34 @@ docs/prompts/
 └── prompt_atlas_modelado_conceptual_v1.md
 ```
 
+## Material de la Sesión 04
+
+| Archivo | Propósito |
+|---|---|
+| `01_plan_docente_3_horas.md` | Plan detallado de la clase. |
+| `02_mapa_conceptual_logico_fisico.md` | Marco conceptual de los tres niveles de modelado y DER. |
+| `03_plan_ejercicios.md` | Ejercicios guiados, taller y retos. |
+| `04_manual_chatgpt_github.md` | Configurar ChatGPT/GitHub y diferenciar lectura de escritura con Codex. |
+| `05_manual_claude_github.md` | Configurar Claude web y Claude Code con GitHub. |
+| `06_manual_gemini_github.md` | Configurar Gemini web y Gemini CLI con GitHub. |
+| `07_manual_cloud_shell_github.md` | Configurar Cloud Shell con GitHub mediante SSH, ramas, commits y PR. |
+
+## Regla común de herramientas
+
+> **Conectar un repositorio como fuente de contexto no equivale necesariamente a tener permisos de escritura sobre GitHub.**
+
+Los alumnos deben distinguir:
+
+```text
+Conector / importación web
+→ lectura y análisis
+
+Agente de desarrollo + checkout Git autenticado
+→ edición, pruebas, commit y push
+```
+
+Todo cambio del curso se realiza sobre una rama y se revisa mediante Pull Request antes de merge.
+
 ## Regla de la sesión
 
 > Ninguna caja entra al modelo si el equipo no puede explicar qué representa, por qué existe y de qué evidencia proviene.
