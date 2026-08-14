@@ -9,69 +9,42 @@ Esta carpeta contiene la especificación construible y el plan vivo de desarroll
 - Entrevista a Riesgos de Crédito.
 - Entrevista a Canales Digitales.
 
-Las entrevistas constituyen evidencia de descubrimiento, no una especificación aprobada. La documentación no agrega cifras, reglas, tecnologías ni decisiones que no estén respaldadas por las entrevistas. Toda ausencia se registra como pregunta abierta.
+Las entrevistas constituyen evidencia de descubrimiento, no una especificación aprobada. Toda ausencia se registra como pregunta abierta.
 
-## Los 12 bloques canónicos
-
-La fuente de verdad `00_application_specification.md` está organizada en:
-
-1. Identidad.
-2. Contexto.
-3. Objetivos.
-4. Alcance.
-5. Actores.
-6. Procesos.
-7. Historias.
-8. Requisitos funcionales.
-9. Requisitos no funcionales.
-10. Reglas.
-11. Criterios.
-12. Preguntas.
-
-## Artefactos
+## Artefactos existentes
 
 - `00_application_specification.md`: fuente de verdad funcional v0.2.
 - `01_user_stories.md`: backlog inicial y trazabilidad.
 - `02_requirements.md`: requisitos funcionales y no funcionales.
-- `03_acceptance_criteria.md`: criterios observables en formato Dado–Cuando–Entonces.
-- `04_open_questions_and_validations.md`: vacíos, contradicciones y validaciones pendientes.
-- `05_figma_prototype.md`: alcance y vínculo del prototipo preliminar.
-- `06_development_plan.md`: plan vivo SDD actualizado por sesión.
-- `07_data_models_and_synthetic_data_plan.md`: plan para modelo conceptual, lógico, físico y datos sintéticos.
+- `03_acceptance_criteria.md`: criterios Dado–Cuando–Entonces.
+- `04_open_questions_and_validations.md`: vacíos y validaciones pendientes.
+- `05_figma_prototype.md`: prototipo preliminar existente.
+- `06_development_plan.md`: plan vivo SDD.
+- `07_data_models_and_synthetic_data_plan.md`: plan de modelos y datos sintéticos.
 
-## Estado
+## Artefactos complementarios de arquitectura y validación
 
-- Versión de Specification: `0.2-draft`.
-- Estado: pendiente de validación con Negocio, Riesgos, Canales, Cumplimiento, Seguridad y Operaciones.
-- Método: Spec-Driven Development.
-- Fuente de verdad: `00_application_specification.md`.
-- Plan maestro: `06_development_plan.md`.
+- `01-producto-y-alcance.md`: visión, alcance, actores, hechos y propuestas.
+- `02-historias-de-usuario.md`: historias priorizadas con criterios Given/When/Then.
+- `03-requisitos.md`: requisitos funcionales y no funcionales verificables.
+- `04-arquitectura-y-datos.md`: arquitectura preliminar, datos y decisiones síncronas/asíncronas.
+- `05-validaciones-y-trazabilidad.md`: validaciones, pruebas, puertas SDD y trazabilidad.
+- `06-preguntas-abiertas.md`: decisiones pendientes, prioridad y responsables sugeridos.
+- `07-prototipo-figma.md`: alcance y validación del nuevo prototipo móvil.
 
-## Regla de trabajo
+## Estado y convención
 
-Toda decisión posterior de arquitectura, modelo de datos, API, pruebas, agentes o implementación deberá:
+- Estado: borrador pendiente de validación con Negocio, Riesgos, Canales, Cumplimiento, Seguridad y Operaciones.
+- **CONFIRMADO**: declarado en entrevistas.
+- **PROPUESTA**: decisión preliminar; requiere validación.
+- **POR RESPONDER**: falta información; no se implementa como regla definitiva.
+- Todo desarrollo debe vincularse con una historia/requisito, conservar la fuente y actualizar especificación, trazabilidad y plan vivo.
 
-1. vincularse con una historia, requisito o pregunta de esta carpeta;
-2. conservar la referencia a la entrevista de origen;
-3. evitar convertir supuestos en hechos;
-4. actualizar la Specification y la matriz de trazabilidad;
-5. actualizar el plan vivo al cierre de cada sesión;
-6. conservar evidencia verificable del incremento.
+## Prototipos Figma
 
-## Evolución de datos
+- [Prototipo móvil preliminar — 2026-08-13](https://www.figma.com/design/657NioLc54nOucv3LGxJUF)
+- [Prototipo preliminar SDD existente](https://www.figma.com/design/X0i1TFLqE3KkkxQqtN8mMg)
 
-El proyecto desarrollará progresivamente:
+## Definition of Ready
 
-- modelo conceptual;
-- modelo lógico;
-- modelo físico;
-- diccionario de datos;
-- migraciones;
-- estrategia y generadores de datos sintéticos;
-- datasets funcionales, de casos borde y de rendimiento.
-
-No se utilizarán datos personales reales en el curso.
-
-## Prototipo Figma
-
-[Crédito Ágil 360 — Prototipo preliminar SDD](https://www.figma.com/design/X0i1TFLqE3KkkxQqtN8mMg)
+Una historia está lista solo si sus preguntas bloqueantes están resueltas, sus reglas tienen responsable y versión, se conocen contratos de integración, se aprobaron criterios de aceptación y se definieron controles de seguridad, auditoría e idempotencia aplicables.
