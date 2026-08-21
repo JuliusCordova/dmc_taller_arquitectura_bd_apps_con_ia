@@ -17,13 +17,13 @@
 
 El programa desarrolla las capacidades necesarias para diseñar, implementar, optimizar, desplegar y asegurar la arquitectura de datos y la base de datos de aplicaciones modernas con apoyo de inteligencia artificial.
 
-El participante recorrerá el ciclo completo: comprensión del negocio, especificación, prompt engineering, modelado conceptual, lógico y físico, implementación relacional y documental, construcción de backend, optimización, despliegue cloud, seguridad y presentación de evidencias.
+El participante recorrerá el ciclo completo: comprensión del negocio, especificación, prompt engineering, modelado conceptual, lógico y físico, implementación relacional y documental, construcción de backend, arquitectura de software, pruebas, optimización, observabilidad, integración asíncrona, despliegue cloud, seguridad, resiliencia y presentación de evidencias.
 
 La DMC Application Specification será la fuente de verdad del proyecto. El framework ATLAS permitirá construir instrucciones controladas para convertir la Specification en modelos, código, pruebas y evidencias. Cada sesión generará un incremento verificable y actualizará el Spec.
 
 ## 3. Objetivo general
 
-Diseñar y construir la arquitectura de datos de una aplicación moderna, utilizando IA como copiloto de ingeniería y aplicando criterios profesionales de prompting, trazabilidad, calidad, rendimiento, seguridad, despliegue y gobierno.
+Diseñar y construir la arquitectura de datos y software de una aplicación moderna, utilizando IA como copiloto de ingeniería y aplicando criterios profesionales de prompting, trazabilidad, calidad, rendimiento, seguridad, despliegue y gobierno.
 
 ## 4. Resultados de aprendizaje
 
@@ -34,12 +34,14 @@ Al finalizar, el participante podrá:
 3. Diseñar prompts de desarrollo mediante el framework ATLAS: Actor, Tarea, Límites, Autovalidación y Salida.
 4. Diseñar modelos conceptuales, lógicos y físicos con asistencia de IA.
 5. Implementar bases de datos PostgreSQL y MongoDB de acuerdo con el patrón de acceso.
-6. Diseñar contratos de API y componentes backend conectados a la base de datos.
-7. Generar datos sintéticos, consultas y pruebas de integridad.
-8. Analizar planes de ejecución y optimizar consultas, índices y estructuras.
-9. Seleccionar y desplegar servicios de datos en Google Cloud.
-10. Incorporar seguridad, auditoría, secretos, observabilidad y recuperación.
-11. Presentar una solución end-to-end con evidencias técnicas y valor de negocio.
+6. Diseñar una arquitectura de software cloud-native trazable a requisitos funcionales y no funcionales.
+7. Diseñar contratos de API y componentes backend conectados a la base de datos.
+8. Generar datos sintéticos, consultas y pruebas de integridad, contrato e integración.
+9. Analizar planes de ejecución y optimizar consultas, índices y estructuras.
+10. Diseñar integración asíncrona y observabilidad para aplicaciones modernas.
+11. Seleccionar y desplegar servicios de datos y aplicación en Google Cloud.
+12. Incorporar seguridad, auditoría, secretos, observabilidad y recuperación.
+13. Presentar una solución end-to-end con evidencias técnicas y valor de negocio.
 
 ## 5. Metodología de aprendizaje
 
@@ -61,13 +63,31 @@ Validación y evidencias
 Actualización del Spec
 ```
 
+A partir de la fase de construcción, la velocidad de generación de la IA se aprovecha para profundizar la ingeniería mediante el ciclo:
+
+```text
+GENERATE
+   ↓
+CRITIQUE
+   ↓
+BREAK
+   ↓
+MEASURE
+   ↓
+REFINE
+   ↓
+EVIDENCE
+```
+
+La IA no sustituye la decisión técnica. El participante debe demostrar por qué un artefacto es correcto, qué requisito satisface, cómo puede fallar y qué evidencia permite aceptarlo.
+
 La distribución referencial de cada sesión es:
 
 - Apertura y contexto: 15 minutos.
-- Conceptos: 45 minutos.
-- Demostración: 30 minutos.
+- Conceptos y decisiones de arquitectura: 45 minutos.
+- Demostración con IA: 30 minutos.
 - Taller guiado: 45 minutos.
-- Taller práctico: 30 minutos.
+- Taller práctico / challenge: 30 minutos.
 - Validación, evidencias y Spec: 15 minutos.
 
 Para las sesiones con IA, el alumno deberá distinguir al menos:
@@ -76,6 +96,8 @@ Para las sesiones con IA, el alumno deberá distinguir al menos:
 - prompt ATLAS utilizado;
 - salida generada;
 - validación humana y técnica;
+- escenario utilizado para intentar romper la solución;
+- medición o evidencia cuando corresponda;
 - corrección aplicada;
 - evidencia versionada.
 
@@ -121,12 +143,7 @@ La evaluación se basa en evidencias acumulativas:
 
 - Diferencia entre pregunta, instrucción y prompt de ingeniería.
 - Por qué una respuesta convincente puede ser incorrecta.
-- Framework ATLAS:
-  - Actor.
-  - Tarea.
-  - Límites.
-  - Autovalidación.
-  - Salida.
+- Framework ATLAS: Actor, Tarea, Límites, Autovalidación y Salida.
 - Evolución desde prompts básicos hasta prompts ejecutables.
 - Variables, delimitadores y ejemplos de salida.
 - Tratamiento de vacíos, supuestos y contradicciones.
@@ -158,175 +175,206 @@ La evaluación se basa en evidencias acumulativas:
 
 **Incremento:** modelo lógico normalizado y diccionario de datos.
 
-### Módulo 2. Base de datos y backend con IA
+### Módulo 2. Base de datos, arquitectura y backend con IA
 
-**Propósito:** transformar el diseño validado en una solución ejecutable.
+**Propósito:** transformar el diseño validado en software ejecutable bajo lineamientos de arquitectura explícitos y verificables.
 
-#### Sesión 6. Diseño físico en PostgreSQL
+#### Sesión 6. Diseño físico PostgreSQL y Backend Readiness con SDD
 
-- Tipos de datos.
-- UUID y claves.
+- SDD Backend Readiness Gate.
+- Tipos de datos, UUID y claves.
 - Restricciones, dominios y enumeraciones.
 - Auditoría y manejo temporal.
 - Convenciones de nombres y scripts de migración.
-- Prompt ATLAS para transformar el modelo lógico en diseño físico.
+- Derivación inicial del sprint de backend desde historias READY.
+- Prompt ATLAS para transformar Specification y modelo lógico en diseño físico y backlog técnico.
 
-**Incremento:** modelo físico y migraciones base.
+**Incremento:** gate de readiness, modelo físico, migraciones base y backlog inicial de backend.
 
-#### Sesión 7. Integridad avanzada y reglas de negocio
+#### Sesión 7. Arquitectura de software cloud-native en Google Cloud
 
-- Constraints simples y compuestos.
-- Exclusión de solapamientos.
-- Funciones y triggers.
-- Transacciones y concurrencia.
-- Reglas que deben vivir en base de datos o aplicación.
+- Del código funcional a una arquitectura operable.
+- Requisitos no funcionales como drivers de arquitectura.
+- Separación API, aplicación, dominio e infraestructura.
+- Arquitectura limpia / hexagonal y puertos-adaptadores.
+- Modular monolith frente a microservicios: criterios de decisión.
+- Stateless backend y diseño para Cloud Run.
+- PostgreSQL en Cloud SQL, conexión y presión sobre el pool.
+- Evidencias en Cloud Storage.
+- Identidad de workload, IAM y Secret Manager.
+- Observabilidad desde el diseño.
+- ADR y trazabilidad Specification → RNF → decisión → componente.
+- ATLAS Architecture Review sobre el backend iniciado.
+
+**Incremento:** arquitectura lógica, arquitectura GCP v1, lineamientos de código, ADR iniciales y backlog de refactor arquitectónico.
+
+#### Sesión 8. Integridad avanzada, transacciones y concurrencia
+
+- Constraints simples, compuestos y condicionales.
+- Exclusión de estados o rangos incompatibles.
+- Funciones y triggers: cuándo usarlos y cuándo evitarlos.
+- Reglas que viven en base de datos, backend o ambos.
+- Límites transaccionales por caso de uso.
+- Atomicidad, rollback e idempotencia.
+- Concurrencia, locking y optimistic concurrency.
 - Generación de pruebas negativas desde la Specification.
 
-**Incremento:** reglas críticas implementadas y pruebas negativas.
+**Incremento:** invariantes críticos implementados, transacciones definidas y suite de pruebas negativas.
 
-#### Sesión 8. Datos sintéticos y consultas de negocio
-
-- Generación de datos sintéticos con IA.
-- Prohibición de PII real.
-- Datos válidos, inválidos y casos límite.
-- Seeds reproducibles.
-- Consultas operativas y analíticas.
-- Vistas y funciones de consulta.
-- Trazabilidad dato sintético-criterio de aceptación.
-
-**Incremento:** dataset sintético, seeds y catálogo de consultas.
-
-#### Sesión 9. Backend, contratos de API y persistencia
+#### Sesión 9. APIs profesionales, vertical slices y persistencia
 
 - Diseño de API a partir de historias de usuario.
-- Contratos, validación y manejo de errores.
-- Separación de responsabilidades.
-- Acceso a datos y transacciones.
-- IA para generar scaffolding y pruebas.
-- Prompt ATLAS para desarrollo incremental y controlado.
+- OpenAPI y contratos versionados.
+- DTOs, validación y manejo de errores.
+- Vertical slices y casos de uso.
+- Separación controller / application / domain / infrastructure.
+- Repositorios, unit of work y acceso a datos.
+- IA para generar scaffolding controlado por Specification.
+- Pruebas básicas junto con el código.
 
-**Incremento:** backend mínimo conectado a PostgreSQL y contrato de API versionado.
+**Incremento:** backend mínimo conectado a PostgreSQL, vertical slices trazables y contrato OpenAPI versionado.
 
-### Módulo 3. Optimización del modelo de datos con IA
+#### Sesión 10. Testing, datos sintéticos y calidad asistidos por IA
 
-**Propósito:** mejorar rendimiento, mantenibilidad, calidad y experiencia de operación.
+- Pirámide práctica de pruebas para una aplicación moderna.
+- Unit tests, integration tests y contract tests.
+- Pruebas positivas, negativas y de regresión.
+- Generación de datos sintéticos sin PII real.
+- Casos válidos, inválidos, bordes y escenarios adversos.
+- Seeds reproducibles.
+- Trazabilidad criterio de aceptación → dato → prueba → evidencia.
+- Mutation mindset: intentar romper el incremento generado por IA.
 
-#### Sesión 10. Patrones de acceso e indexación
+**Incremento:** dataset sintético reproducible y suite automatizada de pruebas del backend y la persistencia.
+
+### Módulo 3. Rendimiento, observabilidad y persistencia especializada
+
+**Propósito:** demostrar que la solución no solo funciona, sino que puede medirse, diagnosticarse y evolucionar.
+
+#### Sesión 11. Patrones de acceso, indexación y optimización SQL
 
 - Consultas críticas y patrones de lectura/escritura.
 - Índices B-tree, compuestos y parciales.
 - Selectividad y orden de columnas.
-- Costos de indexación.
-- Recomendaciones asistidas por IA y validación humana.
-
-**Incremento:** estrategia de índices justificada.
-
-#### Sesión 11. Planes de ejecución y optimización SQL
-
 - EXPLAIN y EXPLAIN ANALYZE.
 - Scan secuencial, index scan, joins y sorts.
-- Identificación de cuellos de botella.
 - Reescritura de consultas.
-- Comparación antes y después.
+- Benchmark antes y después.
+- Recomendaciones de IA sujetas a evidencia de ejecución.
 
-**Incremento:** evidencias de optimización y métricas.
+**Incremento:** estrategia de índices y optimización sustentada con métricas comparativas.
 
-#### Sesión 12. Calidad de datos, pruebas y observabilidad
+#### Sesión 12. Observabilidad y diagnóstico de aplicaciones
 
-- Reglas de calidad.
-- Pruebas de esquema, integridad y negocio.
-- Pruebas positivas, negativas y de regresión.
-- Logging, métricas y trazas.
-- Evidencias automatizadas.
-- Revisión de resultados generados por IA.
+- Logging estructurado.
+- Correlation ID, request ID y trazabilidad por caso de negocio.
+- Métricas técnicas y métricas del proceso.
+- Latencia, errores, throughput y saturación.
+- Trazas distribuidas como concepto.
+- Cloud Logging y Cloud Monitoring.
+- Diagnóstico asistido por IA a partir de evidencia.
+- SLO/SLA básicos derivados de RNF.
 
-**Incremento:** suite de validación y tablero básico de evidencias.
+**Incremento:** estándar de observabilidad, instrumentación básica y tablero/evidencia de diagnóstico.
 
-#### Sesión 13. Modelado documental con MongoDB
+#### Sesión 13. Modelado documental y persistencia políglota con MongoDB
 
 - Cuándo utilizar documentos.
 - Embedding frente a referencing.
 - Diseño orientado a patrones de acceso.
 - Validación de esquema e índices.
+- Consistencia y transacciones: trade-offs.
 - Comparación PostgreSQL-MongoDB.
-- Decisión de persistencia sustentada en requisitos.
+- Decisión de persistencia sustentada en requisitos y ADR.
 
-**Incremento:** modelo documental para un subdominio seleccionado.
+**Incremento:** modelo documental para un subdominio seleccionado y decisión de persistencia defendible.
 
-### Módulo 4. Cloud Databases y despliegue en Google Cloud
+### Módulo 4. Arquitectura cloud, integración y despliegue en Google Cloud
 
-**Propósito:** desplegar la solución utilizando servicios gestionados y criterios de arquitectura cloud.
+**Propósito:** evolucionar el backend a una solución distribuida, desplegable y operable usando servicios gestionados.
 
-#### Sesión 14. Arquitectura cloud y PostgreSQL en Cloud SQL
+#### Sesión 14. Arquitectura event-driven e integración asíncrona en GCP
+
+- Síncrono frente a asíncrono.
+- Eventos de dominio e integración.
+- Pub/Sub y Eventarc como patrones de integración.
+- Productor, consumidor y contratos de evento.
+- Idempotencia, reintentos y dead-letter handling.
+- Consistencia eventual.
+- Separación entre transacción operativa y efectos secundarios.
+- ATLAS para descubrir escenarios de fallo y duplicidad.
+
+**Incremento:** flujo asíncrono funcional, contrato de evento y pruebas de reintento/idempotencia.
+
+#### Sesión 15. Cloud SQL, Cloud Run y despliegue end-to-end
 
 - Servicios administrados y responsabilidades compartidas.
-- Disponibilidad, escalabilidad y resiliencia.
-- Cloud SQL, Firestore, MongoDB Atlas y BigQuery.
-- Criterios de selección.
-- Estimación inicial de capacidad y costo.
-- Instancia Cloud SQL, redes y conectividad.
-- Usuarios, bases, migraciones y datos iniciales.
-- Backups y conexión segura desde aplicaciones.
+- Cloud SQL PostgreSQL: instancia, usuarios, base y migraciones.
+- Conectividad segura desde Cloud Run.
+- Cloud Run: contenedores, revisiones, concurrencia, min/max instances y configuración.
+- Variables, secretos e identidad del servicio.
+- Cloud Storage para evidencias cuando corresponda.
+- Prueba end-to-end desplegada.
 
-**Incremento:** decisión cloud documentada y PostgreSQL desplegado en Cloud SQL.
+**Incremento:** backend y PostgreSQL desplegados en GCP con endpoint funcional y evidencia reproducible.
 
-#### Sesión 15. Backend y despliegue en Cloud Run
+#### Sesión 16. CI/CD y release engineering asistido por IA
 
-- Contenedores y configuración externa.
-- Variables, secretos y conexión a Cloud SQL.
-- Despliegue en Cloud Run.
-- Escalamiento y límites.
-- Prueba end-to-end.
+- Build, test, package, deploy.
+- Docker y Artifact Registry.
+- Pipeline de integración y despliegue.
+- Migraciones dentro del ciclo de release.
+- Estrategias de promoción y rollback.
+- Configuración por ambiente.
+- Quality gates y evidencia automática.
+- IA como revisor de cambios, no como aprobador autónomo.
 
-**Incremento:** aplicación desplegada con endpoint funcional.
+**Incremento:** pipeline CI/CD con quality gates, despliegue repetible y rollback documentado.
 
-#### Sesión 16. BigQuery para analítica de aplicaciones
+#### Sesión 17. BigQuery y analítica de aplicaciones
 
 - Separación OLTP y analítica.
-- Modelo de datos analítico.
-- Carga de eventos y datos operativos.
+- Eventos y datos operativos hacia analítica.
+- Modelo analítico mínimo.
 - Particionamiento y clustering.
-- Consultas y tablero de indicadores.
+- Consultas de negocio y métricas del producto.
+- Costos y patrones de consulta.
+- Uso de IA para generar hipótesis y SQL, con validación de resultados.
 
-**Incremento:** dataset analítico y métricas del producto.
+**Incremento:** dataset analítico en BigQuery, consultas verificadas y métricas del producto.
 
-### Módulo 5. Seguridad en bases de datos y aplicaciones
+### Módulo 5. Seguridad, resiliencia y defensa de arquitectura
 
-**Propósito:** incorporar controles técnicos y operativos para proteger y operar la solución.
+**Propósito:** demostrar que la solución puede protegerse, recuperarse, operarse y defenderse técnicamente.
 
-#### Sesión 17. Seguridad, identidad y protección de datos
+#### Sesión 18. Seguridad, resiliencia y preparación de producción
 
 - Principio de mínimo privilegio.
 - Roles de base de datos y aplicación.
-- Secret Manager.
+- IAM y Secret Manager.
 - Cifrado y datos sensibles.
 - Inyección SQL y validación de entradas.
 - Auditoría y trazabilidad.
 - Límites para IA y agentes sobre datos y acciones.
-
-**Incremento:** modelo de seguridad y controles implementados.
-
-#### Sesión 18. Resiliencia, operación y preparación de producción
-
-- Backups, restauración y continuidad.
+- Backups y restauración.
 - RPO y RTO.
-- Monitoreo, alertas y runbooks.
-- Gestión de cambios y migraciones.
-- Checklist de producción.
-- Revisión integral del Spec y de los prompts críticos.
+- Timeouts, retries y degradación controlada.
+- Runbooks y checklist de producción.
+- Architecture challenge: escenarios de caída y recuperación.
 
-**Incremento:** paquete de preparación para producción.
+**Incremento:** modelo de seguridad, controles implementados y paquete de production readiness con pruebas de recuperación.
 
 #### Sesión 19. Proyecto integrador y defensa de arquitectura
 
 - Demostración end-to-end.
 - Trazabilidad desde el negocio hasta las pruebas.
 - Decisiones, alternativas y trade-offs.
-- Evidencias de rendimiento, seguridad y despliegue.
+- Evidencias de rendimiento, observabilidad, seguridad y despliegue.
+- Architecture Review final.
 - Presentación ejecutiva y técnica.
 - Retrospectiva del uso de IA y del framework ATLAS.
 
-**Incremento:** solución final, repositorio, Spec, prompts y presentación.
+**Incremento:** solución final, repositorio, Spec, ADR, prompts, pruebas, evidencias y presentación.
 
 ## 8. Artefactos del proyecto integrador
 
@@ -336,6 +384,7 @@ El repositorio final debe incluir:
 docs/
   spec/
   arquitectura/
+    adr/
   modelos/
   decisiones/
   prompts/
@@ -365,6 +414,8 @@ La carpeta `docs/prompts/` debe conservar, como mínimo:
 - evidencia comparativa;
 - prompts especializados utilizados durante el proyecto.
 
+La carpeta `docs/arquitectura/adr/` debe conservar las decisiones arquitectónicas relevantes, incluyendo contexto, decisión, alternativas y consecuencias.
+
 ## 9. Herramientas de referencia
 
 - Git y GitHub.
@@ -376,9 +427,9 @@ La carpeta `docs/prompts/` debe conservar, como mínimo:
 - Docker.
 - Mermaid y Draw.io.
 - Lenguaje y framework backend definidos para el proyecto.
-- Google Cloud: Cloud SQL, Cloud Run, BigQuery, Secret Manager, Logging y Monitoring.
+- Google Cloud: Cloud SQL, Cloud Run, Cloud Storage, Pub/Sub, Eventarc, BigQuery, Secret Manager, Artifact Registry, Logging y Monitoring.
 
-Las herramientas pueden evolucionar, pero el flujo metodológico, el framework ATLAS y la estructura de la Specification deben permanecer estables.
+Las herramientas pueden evolucionar, pero el flujo metodológico, el framework ATLAS, la trazabilidad y la estructura de la Specification deben permanecer estables.
 
 ## 10. Requisitos del participante
 
@@ -400,10 +451,13 @@ Caso de uso
 → Specification
 → Prompt ATLAS
 → Diseño
+→ Arquitectura
 → Código
 → Pruebas
+→ Medición
 → Despliegue
+→ Operación
 → Evidencias
 ```
 
-La solución final debe ser funcional, trazable, versionada y defendible desde las perspectivas de negocio, arquitectura y operación.
+La solución final debe ser funcional, trazable, versionada, observable, operable y defendible desde las perspectivas de negocio, arquitectura y operación.
