@@ -105,6 +105,19 @@ Al finalizar la sesión el equipo debe producir:
 - backlog de refactor arquitectónico priorizado;
 - actualización de preguntas/decisiones de la Specification.
 
+## Tarea de transferencia — casos restantes
+
+Como cierre de la Sesión 07, cada equipo debe aplicar los mismos principios a uno de los dos casos restantes del programa:
+
+- **Banca — Crédito Ágil 360**.
+- **Retail — Stock Único**.
+
+La tarea exige usar IA para proponer una arquitectura cloud-native, pero demostrar trazabilidad desde el SDD, registrar ADR, ejecutar un Architecture Challenge y documentar al menos una recomendación de IA rechazada o modificada.
+
+La consigna completa, prompt ATLAS, entregables, rúbrica y Definition of Done están en:
+
+- [`06_tarea_arquitectura_ia_casos_restantes.md`](./06_tarea_arquitectura_ia_casos_restantes.md)
+
 ## Frontera con la Sesión 08
 
 La Sesión 07 define **cómo se organiza y despliega conceptualmente el software**.
@@ -119,6 +132,7 @@ La Sesión 08 toma esa arquitectura y profundiza **qué invariantes debe protege
 4. `03_prompts_atlas_architecture_review.md` — prompts de diseño, crítica y revisión.
 5. `04_taller_siniestro_facil_arquitectura.md` — laboratorio guiado.
 6. `05_adr_y_definition_of_done.md` — ADR mínimos y criterios de cierre.
+7. `06_tarea_arquitectura_ia_casos_restantes.md` — tarea de transferencia para Crédito Ágil 360 y Stock Único.
 
 ## Referencias oficiales Google Cloud
 
