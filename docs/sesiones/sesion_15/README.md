@@ -28,6 +28,48 @@ Introducir la seguridad de bases de datos desde una mirada de arquitectura: amen
 - Taller: diseño de backups protegidos/inmutables.
 - Taller: replicación básica y diferencia entre réplica y backup.
 
+## Laboratorio guiado
+
+La sesión incorpora un laboratorio reproducible en Google Cloud Shell:
+
+```text
+laboratorio/
+├── README.md
+├── seed.sql
+├── app_inseguro.py
+├── app_seguro.py
+├── roles.sql
+├── permissions_test.sh
+├── requirements.txt
+└── tests/
+    └── test_sqli.py
+```
+
+El laboratorio sigue el ciclo:
+
+```mermaid
+flowchart LR
+    A[Threat model] --> B[Break]
+    B --> C[Mitigación]
+    C --> D[Test]
+    D --> E[Measure]
+    E --> F[Evidence]
+    F --> G[Actualizar Specification]
+```
+
+Incluye:
+
+1. threat modeling asistido por IA;
+2. reproducción controlada y mitigación de SQL Injection;
+3. validación estructural como principio contra inyección NoSQL;
+4. mínimo privilegio y pruebas automatizadas de permisos;
+5. análisis de secrets exposure y blast radius de exfiltración;
+6. backup lógico, checksum y restauración verificable;
+7. replicación lógica para demostrar que **réplica ≠ backup**;
+8. diagramas Mermaid versionables y evidencias SDD.
+
+Ver [`laboratorio/README.md`](./laboratorio/README.md) para el paso a paso completo.
+
 ## Resultado observable
 
 Cada equipo termina con:
@@ -35,12 +77,17 @@ Cada equipo termina con:
 - threat model básico de la solución;
 - matriz de vulnerabilidades y controles;
 - SQL Injection reproducido y mitigado en laboratorio;
+- test de regresión;
 - matriz de roles y permisos;
-- estrategia de secretos;
-- estrategia de backup;
+- estrategia de secretos y exfiltración;
+- estrategia de backup con restore probado;
 - estrategia de replicación;
 - evidencias before/after;
 - actualización de la DMC Application Specification.
+
+## Principio de trabajo con IA
+
+> **La IA propone. La configuración controla. La prueba demuestra. La evidencia decide.**
 
 ## Idea fuerza
 
