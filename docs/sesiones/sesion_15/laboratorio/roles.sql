@@ -7,13 +7,16 @@ BEGIN
     CREATE ROLE app_writer NOLOGIN;
   END IF;
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'api_reportes') THEN
-    CREATE ROLE api_reportes LOGIN PASSWORD 'lab_only_reportes' IN ROLE app_readonly;
+    CREATE ROLE api_reportes LOGIN PASSWORD 'lab_only_reportes';
   END IF;
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'api_pedidos') THEN
-    CREATE ROLE api_pedidos LOGIN PASSWORD 'lab_only_pedidos' IN ROLE app_writer;
+    CREATE ROLE api_pedidos LOGIN PASSWORD 'lab_only_pedidos';
   END IF;
 END
 $$;
+
+GRANT app_readonly TO api_reportes;
+GRANT app_writer TO api_pedidos;
 
 REVOKE ALL ON DATABASE pedidos FROM PUBLIC;
 GRANT CONNECT ON DATABASE pedidos TO app_readonly, app_writer;
