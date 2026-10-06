@@ -5,48 +5,69 @@
 **Duración:** 3 horas  
 **Modalidad:** teórico-práctica  
 **Programa:** Arquitectura y Bases de Datos con IA para Aplicaciones Modernas  
-**Metodología:** Spec-Driven Development + framework ATLAS
+**Metodología:** Spec-Driven Development + ATLAS + Evidence-Driven Validation
 
 ## Pregunta guía
 
-> La arquitectura es segura en diseño. ¿Cómo endurecemos realmente el servidor, las conexiones, las credenciales y la auditoría?
+> La arquitectura ya tiene controles. ¿Cómo demostramos que PostgreSQL está realmente endurecido, cifrado y auditable?
 
-## Propósito
+## Continuidad con la Sesión 15
 
-Aplicar hardening técnico sobre PostgreSQL y Linux, usando el modelo CIA como marco de control. La sesión traduce principios de seguridad a configuraciones verificables: puertos, listeners, autenticación, roles, extensiones, TLS, secretos, auditoría y logs.
+La Sesión 15 dejó como baseline:
+
+- SQL Injection mitigado y probado;
+- mínimo privilegio validado;
+- backup + restore comprobado;
+- réplica diferenciada de backup;
+- GitHub como fuente de verdad;
+- Cloud Shell como estación de ejecución;
+- evidencia versionada como criterio de aceptación.
+
+La Sesión 16 no repite esas pruebas. Las lleva a configuración de plataforma.
+
+```mermaid
+flowchart LR
+    S15["S15<br/>qué proteger"] --> S16["S16<br/>cómo endurecer"]
+    S16 --> E["configuración + prueba + evidencia"]
+```
 
 ## Contenido oficial
 
 - Modelo CIA aplicado a bases de datos.
-- Qué es hardening y cómo implementarlo.
-- Puertos y listeners.
-- Usuarios y privilegios.
-- Logs y extensiones.
+- Hardening: puertos, listeners, usuarios, logs y extensiones.
 - Cifrado at-rest e in-transit.
 - Introducción a Zero Trust.
 - Taller: hardening de PostgreSQL en Linux.
-- Taller: configuración TLS para conexiones.
+- Taller: configuración TLS.
 - Taller: implementación de secrets manager.
-- Taller: configuración de auditoría y logs.
+- Taller: auditoría y logs.
 
 ## Resultado observable
 
 Cada equipo termina con:
 
-- baseline de configuración;
-- mapa CIA → controles;
-- checklist de hardening;
+- baseline de seguridad;
+- matriz CIA → controles;
 - listeners y acceso revisados;
-- TLS habilitado y probado;
-- estrategia de secretos implementada;
-- auditoría/logging configurados;
+- roles/ownership/extensiones auditados;
+- conexión TLS verificada;
+- secreto fuera del repositorio;
+- logging/auditoría demostrados;
 - evidencia before/after;
-- actualización de la DMC Application Specification.
+- actualización del Spec.
+
+## Ciclo de trabajo
+
+```text
+Generate → Commit → Pull → Run → Validate → Evidence → Push → Review
+```
+
+## Material de la sesión
+
+- [Plan docente de 3 horas](./01_plan_docente_3_horas.md)
+- [Informe de transición Sesión 15 → 16](./02_informe_transicion_s15_s16.md)
+- [Laboratorio guiado](./laboratorio/README.md)
 
 ## Idea fuerza
 
-> Hardening no es agregar más herramientas. Es eliminar confianza innecesaria y reducir superficie de ataque.
-
-## Conexión con la Sesión 17
-
-La Sesión 16 implementa controles. La Sesión 17 verificará si esos controles realmente funcionan mediante auditoría, pruebas negativas, hardening score y evidencia.
+> Hardening no es agregar herramientas. Es reducir superficie de ataque, eliminar confianza innecesaria y demostrar que los controles funcionan.
