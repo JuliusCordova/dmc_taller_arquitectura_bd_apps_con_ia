@@ -6,104 +6,89 @@
 
 Al finalizar, el participante podrá:
 
-1. aplicar el modelo CIA a bases de datos;
-2. explicar hardening como reducción de superficie de ataque;
-3. revisar puertos, listeners, `pg_hba.conf`, usuarios, logs y extensiones;
-4. diferenciar cifrado at-rest e in-transit;
-5. aplicar principios Zero Trust al acceso a datos;
-6. habilitar y validar TLS en PostgreSQL;
-7. sacar secretos del código y usar un secrets manager;
+1. mapear Confidentiality, Integrity y Availability a controles concretos;
+2. construir un baseline de seguridad PostgreSQL/Linux;
+3. reducir superficie de ataque en puertos, listeners, usuarios y extensiones;
+4. revisar `pg_hba.conf`, ownership e inheritance;
+5. diferenciar cifrado at-rest e in-transit;
+6. habilitar y verificar TLS;
+7. consumir secretos mediante un gestor de secretos;
 8. configurar logging y auditoría básica;
-9. producir evidencia before/after.
+9. demostrar hardening mediante evidencia before/after;
+10. actualizar el Spec con controles verificables.
+
+## Pregunta guía
+
+> ¿Cómo sabemos que PostgreSQL está realmente endurecido y no solo “configurado”?
 
 ## Agenda
 
 | Tiempo | Bloque | Resultado |
 |---:|---|---|
-| 0–15 | Puente con Sesión 15 + CIA | mapa CIA |
-| 15–35 | Hardening y superficie de ataque | checklist inicial |
-| 35–55 | Puertos, listeners y pg_hba.conf | accesos restringidos |
-| 55–75 | Usuarios, logs y extensiones | configuración revisada |
-| 75–90 | Cifrado at-rest/in-transit + Zero Trust | controles definidos |
+| 0–15 | Puente S15 → S16 + CIA | mapa CIA |
+| 15–35 | Baseline y superficie de ataque | hardening_before |
+| 35–55 | Red, listeners y pg_hba.conf | acceso reducido |
+| 55–75 | Roles, ownership, extensiones | inventario y correcciones |
+| 75–90 | Cifrado + Zero Trust | diseño de controles |
 | 90–100 | Pausa | — |
 | 100–125 | Taller 1: hardening PostgreSQL/Linux | before/after |
-| 125–145 | Taller 2: TLS | conexión cifrada validada |
-| 145–165 | Taller 3: Secrets Manager | secreto fuera del código |
-| 165–175 | Taller 4: auditoría y logs | evidencia de actividad |
-| 175–180 | Cierre + Spec | incremento versionado |
+| 125–145 | Taller 2: TLS | sesión cifrada validada |
+| 145–165 | Taller 3: Secret Manager | secreto fuera del repo |
+| 165–175 | Taller 4: auditoría y logs | actividad observable |
+| 175–180 | Reviewer + cierre | evidence index + Spec |
 
-## Modelo CIA aplicado
+## 1. CIA aplicado a Pedidos
 
-### Confidentiality
+| Dimensión | Pregunta | Controles |
+|---|---|---|
+| Confidentiality | ¿quién puede leer qué? | roles, TLS, secrets, red |
+| Integrity | ¿quién puede modificar qué? | ownership, permisos, auditoría |
+| Availability | ¿cómo seguimos o recuperamos? | backup, replica, operación |
 
-Pregunta: ¿quién puede leer qué?
+## 2. Baseline de hardening
 
-Controles: identidad, roles, cifrado, segmentación, secretos y masking cuando corresponda.
-
-### Integrity
-
-Pregunta: ¿cómo evitamos cambios no autorizados o incorrectos?
-
-Controles: transacciones, constraints, roles, auditoría, separación de funciones.
-
-### Availability
-
-Pregunta: ¿cómo mantenemos el servicio recuperable y disponible?
-
-Controles: backups, réplicas, HA, monitoreo y capacidad.
-
-## Hardening
-
-Secuencia:
-
-```text
-Instalación/configuración
-→ inventario
-→ reducir
-→ restringir
-→ cifrar
-→ auditar
-→ evidenciar
-```
-
-Regla: todo servicio, puerto, usuario, privilegio o extensión debe tener una razón de negocio o técnica documentada.
-
-## Superficie de ataque PostgreSQL
-
-```text
-PostgreSQL
-├── puerto 5432
-├── listen_addresses
-├── pg_hba.conf
-├── usuarios/roles
-├── ownership
-├── extensiones
-├── logs
-├── conexiones TLS
-├── secretos
-└── backups
-```
-
-## Puertos y listeners
-
-Revisar:
+Registrar antes de modificar:
 
 ```bash
 ss -lntp
 ```
 
-Y en PostgreSQL:
-
 ```sql
 SHOW listen_addresses;
 SHOW port;
+SHOW ssl;
+SHOW password_encryption;
+
+SELECT rolname, rolsuper, rolcreaterole, rolcreatedb
+FROM pg_roles;
+
+SELECT extname, extversion
+FROM pg_extension;
 ```
 
-Evitar exposición global por comodidad. Restringir interfaces y redes según necesidad.
+Toda evidencia debe incluir:
 
-## pg_hba.conf
+```text
+timestamp
+commit SHA
+comando
+resultado
+PASS / FAIL
+```
 
-Explicar el patrón:
+## 3. Red, listeners y pg_hba.conf
+
+Modelo:
+
+```mermaid
+flowchart LR
+    C["Cliente autorizado"] --> N["red permitida"]
+    N --> H["pg_hba.conf"]
+    H --> P[(PostgreSQL)]
+    X["origen no autorizado"] -. bloqueado .-> H
+```
+
+Explicar:
 
 ```text
 quién → desde dónde → a qué base → con qué método
@@ -112,94 +97,51 @@ quién → desde dónde → a qué base → con qué método
 Ejemplo conceptual:
 
 ```text
-hostssl pedidos_db app_user 10.0.0.0/24 scram-sha-256
+hostssl pedidos app_runtime 10.0.0.0/24 scram-sha-256
 ```
 
-## Usuarios y privilegios
+## 4. Roles, ownership e inheritance
 
-Separar:
+La aplicación:
 
-- administración;
-- runtime de aplicación;
-- reporting readonly;
-- operaciones de backup.
+- no es superuser;
+- no es owner;
+- no crea roles;
+- no reparte permisos;
+- recibe solo el mínimo necesario.
 
-La aplicación no debe usar el usuario administrador.
+Revisar además privilegios heredados.
 
-## Extensiones
-
-Inventariar:
+## 5. Extensiones
 
 ```sql
 SELECT extname, extversion
 FROM pg_extension;
 ```
 
-Clasificar: necesaria, conocida, aprobada, pendiente o innecesaria.
+Clasificar:
 
-## Logs
+- aprobada y necesaria;
+- necesaria pendiente de validación;
+- innecesaria;
+- desconocida.
 
-Revisar parámetros como:
-
-- `log_connections`;
-- `log_disconnections`;
-- `log_statement` según contexto;
-- `log_min_duration_statement`;
-- formato/prefijo suficiente para trazabilidad.
-
-## Cifrado
+## 6. Cifrado
 
 ### At-rest
 
-Protege discos, snapshots, backups y almacenamiento persistente.
+Aplicado a:
+
+- discos;
+- snapshots;
+- backups;
+- object storage.
 
 ### In-transit
 
-Protege la comunicación cliente ↔ PostgreSQL mediante TLS.
+TLS entre cliente y PostgreSQL.
 
-## Zero Trust aplicado a datos
-
-No confiar solo por pertenecer a una red.
-
-```text
-Identidad
-+
-Autorización
-+
-Canal cifrado
-+
-Contexto
-+
-Logging/Auditoría
-```
-
-## Taller 1 — Hardening PostgreSQL en Linux
-
-Revisar:
-
-```bash
-sudo ss -lntp
-sudo systemctl status postgresql
-```
-
-Y:
-
-```sql
-SHOW listen_addresses;
-SHOW ssl;
-SHOW password_encryption;
-```
-
-Inventariar roles y extensiones. Registrar `hardening_before.md`, aplicar cambios autorizados y generar `hardening_after.md`.
-
-## Taller 2 — TLS
-
-1. Disponer de certificados de laboratorio.
-2. Configurar PostgreSQL con SSL/TLS.
-3. Ajustar `pg_hba.conf` para requerir conexión segura cuando corresponda.
-4. Reiniciar de forma controlada.
-5. Conectarse forzando TLS.
-6. Validar:
+Validación obligatoria:
 
 ```sql
 SELECT ssl, version, cipher
@@ -207,62 +149,101 @@ FROM pg_stat_ssl
 WHERE pid = pg_backend_pid();
 ```
 
-## Taller 3 — Secrets Manager
+`ssl = on` por sí solo no es evidencia suficiente.
+
+## 7. Zero Trust
+
+```mermaid
+flowchart LR
+    W["Workload"] --> I["Identity"]
+    I --> A["Authorization"]
+    A --> T["TLS"]
+    T --> DB[(Database)]
+    DB --> L["Audit / Logs"]
+```
+
+No confiar solo porque el tráfico venga desde “la red interna”.
+
+## 8. Secret Manager
 
 Patrón:
 
 ```text
 Código sin secreto
-→ identidad de workload
-→ Secret Manager / Key Vault / Secrets Manager / Vault
+→ identidad
+→ Secret Manager
 → secreto en runtime
+→ PostgreSQL
 ```
 
-La práctica puede usar el proveedor autorizado para el curso; el aprendizaje es el patrón, no memorizar cuatro productos.
+En GCP el laboratorio puede utilizar Secret Manager. El aprendizaje es el patrón, no memorizar el producto.
 
-## Taller 4 — Auditoría y logs
+## 9. Auditoría y logs
 
-Responder con evidencia:
+Preguntas mínimas:
 
-- quién se conectó;
-- desde dónde;
-- cuándo;
-- qué sesión está activa;
-- qué errores o cambios relevantes ocurrieron.
+- ¿quién se conectó?
+- ¿desde qué origen?
+- ¿cuándo?
+- ¿con qué aplicación?
+- ¿qué error ocurrió?
+- ¿qué control lo bloqueó?
 
-Consulta útil:
+Consulta base:
 
 ```sql
 SELECT usename, application_name, client_addr, backend_start
 FROM pg_stat_activity;
 ```
 
-`pgAudit` puede presentarse como opción avanzada a evaluar, no como requisito universal.
+`pgAudit` se presenta como capacidad avanzada, no como requisito universal.
 
-## Prompt ATLAS sugerido
+## 10. Laboratorio
+
+Usar:
+
+```text
+GPT / Claude → GitHub → Cloud Shell → PostgreSQL
+                         ↓
+                    Checkpoint
+                         ↓
+                    Evidence
+                         ↓
+                      GitHub
+                         ↓
+                 Gemini reviewer
+```
+
+Ver [laboratorio/README.md](./laboratorio/README.md).
+
+## Prompt ATLAS
 
 ```text
 ## ACTOR
-Actúa como Security Architect y PostgreSQL Security Engineer.
+Security Architect y PostgreSQL Security Engineer.
 
 ## TAREA
-Evalúa PostgreSQL y su entorno Linux e identifica oportunidades de hardening.
+Evalúa el entorno PostgreSQL del laboratorio y aplica hardening verificable.
 
 ## LÍMITES
-No asumas que una configuración por defecto es segura.
 No inventes evidencia.
-No propongas deshabilitar una capacidad necesaria sin documentar impacto.
+No copies secretos a la salida.
+No deshabilites capacidades necesarias sin explicar impacto.
+No marques un control como implementado si no existe prueba.
 
 ## AUTOVALIDACIÓN
-Evalúa cada hallazgo contra Confidentiality, Integrity y Availability.
-Revisa red, autenticación, roles, TLS, secretos, logs, extensiones y backups.
+Evalúa CIA, red, autenticación, roles, ownership, TLS, secretos,
+extensiones, logs y auditoría.
+Cada hallazgo debe indicar evidencia before/after.
 
 ## SALIDA
-1. Hardening assessment.
-2. Hallazgos y riesgo.
-3. Configuración recomendada.
-4. Evidencia before/after.
-5. Preguntas abiertas.
+1. Security baseline.
+2. Matriz CIA.
+3. Hallazgos.
+4. Cambios propuestos.
+5. Pruebas.
+6. Evidencias.
+7. Riesgos residuales.
 ```
 
 ## Entregables
@@ -277,21 +258,24 @@ docs/security/
 └── 12_zero_trust_notes.md
 
 evidence/
-├── hardening_before.md
-├── hardening_after.md
-├── tls_test.md
-├── secrets_test.md
-└── audit_test.md
+├── hardening_before.txt
+├── hardening_after.txt
+├── tls_test.txt
+├── secrets_test.txt
+├── audit_test.txt
+└── README.md
 ```
 
 ## Definition of Done
 
-- [ ] CIA mapeado a controles;
+- [ ] CIA mapeado;
+- [ ] baseline generado;
 - [ ] listeners y accesos revisados;
-- [ ] roles mínimos definidos;
+- [ ] roles/ownership auditados;
 - [ ] extensiones inventariadas;
-- [ ] TLS habilitado y probado;
-- [ ] secretos fuera del código;
-- [ ] logging/auditoría configurados;
-- [ ] evidencia before/after versionada;
-- [ ] Specification actualizada.
+- [ ] TLS probado;
+- [ ] secreto fuera de Git;
+- [ ] auditoría/logging validados;
+- [ ] evidence index con SHA;
+- [ ] reviewer final ejecutado;
+- [ ] Spec actualizado.
